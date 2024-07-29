@@ -60,14 +60,15 @@ router.post("/", (req, res) => {
 router.delete("/:id", (req, res) => {
   let { id } = req.params;
   let index = users.find((user) => user.id === +id);
-  if (!index) {
+  let existUser = users.findIndex((user) => user.id === +id);
+  if (existUser < 0) {
     return res.status(400).json({
       msg: "foydalanuvchi topilmadi",
       variant: "error",
       payload: null,
     });
   }
-  users.splice(index, 1);
+  users.splice(existUser, 1);
 
   res.status(200).json({
     msg: "foydalanuvchi o'chirildi",
